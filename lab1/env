@@ -1,0 +1,3 @@
+export GUID=9568
+export MYKEY=~/.ssh/ankay-labs.pem
+export MYUSER=ankay-redhat.com

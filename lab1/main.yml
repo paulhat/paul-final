@@ -1,0 +1,34 @@
+---
+# Setup front-end load balancer tier
+
+
+- name: setup load-balancer tier
+  hosts: "{{ frontend_group }}"
+  roles:
+    - {name: base-config, tags: base-config}
+    - {name: lb-tier, tags: [lbs, haproxy]}
+#    - {name: geerlingguy.haproxy, tags: [lbs, haproxy]}
+
+# Setup application servers tier
+
+- name: setup app tier
+  hosts: "{{ app_group }}"
+  gather_facts: false
+  roles:
+    - {name: base-config, tags: base-config}
+    - {name: app-tier, tags: [apps, tomcat]}
+
+# Setup database tier
+
+- name: setup database tier
+  hosts: "{{ db_group }}"
+  roles:
+    - {name: base-config, tags: base-config}
+    - {name: geerlingguy.postgresql, tags: [dbs, postgres]}
+
+# Check haproxy and tomcat working
+
+#- name: setup database tier
+#  hosts: external
+#  roles:
+#    - {name: checks, tags: checks}
